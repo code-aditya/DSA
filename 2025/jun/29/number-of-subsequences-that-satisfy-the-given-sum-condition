@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int numSubseq(vector<int>& nums, int target) {
+        vector<int> num = nums;
+        sort(num.begin(),num.end());
+        vector<int> m(nums.size()+1);
+        m[0] = 1;
+        int md = 1e9 + 7;
+        for(int i=1;i<m.size();i++)
+        {
+            m[i] = (m[i-1]*2)%md;
+        }
+
+        int i=0, j=num.size()-1;
+        int ans = 0;
+        while(i <= j)
+        {
+            if(num[i]+num[j]>target)
+            {
+                j--;
+            }
+            else
+            {
+                ans = (ans + m[j-i])%md;
+                i++;
+            }
+        }
+        return ans;
+    }
+};
